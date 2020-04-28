@@ -2,11 +2,12 @@ docker-all: docker-build docker-start
 	@echo "docker-all done"
 
 docker-build:
-	@echo "building the image from docker file..."
-	docker build --no-cache --pull -t bs-predictor .
-	@echo "image built - setting up network"
+	@echo "setting up network"
 	docker network create bs-predictor-network
 	@echo "network setup done"
+	@echo "building the image from docker file..."
+	docker build --no-cache --pull -t bs-predictor .
+	@echo "image built"
 
 docker-run:
 	@echo "starting the service in container..."
