@@ -3,15 +3,15 @@ docker-all: docker-build docker-start
 
 docker-build:
 	@echo "building the image from docker file..."
-	docker build --no-cache --pull -t bsPredictor .
+	docker build --no-cache --pull -t bs-predictor .
 	@echo "image built - setting up network"
-	docker network create bsPredictorNetwork
+	docker network create bs-predictor-network
 	@echo "network setup done"
 
 docker-run:
 	@echo "starting the service in container..."
-	docker run -d -p 27017-27019:27017-27019 --name BSmongodb -itd --network=bsPredictorNetwork mongo	
-	docker run -v /home/:/home/ -p 8080:8080 -itd --network=bsPredictorNetwork bsPredictor
+	docker run -d -p 27017-27019:27017-27019 --name bs-mongodb -itd --network=bs-predictor-network mongo	
+	docker run -v /home/:/home/ -p 8080:8080 -itd --network=bs-predictor-network bs-predictor
 
 service:
 	@echo "creating the service..."
@@ -24,21 +24,21 @@ start:
 
 docker-stop:
 	@echo "stopping the service"
-	docker stop bsPredictor
-	docker stop BSmongodb
+	docker stop bs-predictor
+	docker stop bs-mongodb
 	@echo "service stopped"
 
 docker-start:
 	@echo "starting the service"
-	docker start bsPredictor
-	docker start BSmongodb
+	docker start bs-predictor
+	docker start bs-mongodb
 	@echo "service started"
 
 docker-remove:
 	@echo "removing the image"
-	docker rmi -f bsPredictor
-	docker rmi -f BSmongodb
-	docker network rm bsPredictorNetwork
+	docker rmi -f bs-predictor
+	docker rmi -f bs-mongodb
+	docker network rm bs-predictor-network
 	@echo "image removed"
 
 docker-clean: docker-stop docker-remove
