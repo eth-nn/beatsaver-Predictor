@@ -3,7 +3,7 @@ docker-all: docker-build docker-start
 
 docker-build:
 	@echo "setting up network"
-	docker network create bs-predictor-network
+	-docker network create bs-predictor-network
 	@echo "network setup done"
 	@echo "building the image from docker file..."
 	docker build --no-cache --pull -t bs-predictor .
@@ -37,8 +37,8 @@ docker-start:
 
 docker-remove:
 	@echo "removing files"
-	docker network disconnect bs-predictor-network bs-predictor
-	docker network disconnect bs-predictor-network bs-mongodb
+	-docker network disconnect bs-predictor-network bs-predictor
+	-docker network disconnect bs-predictor-network bs-mongodb
 	docker rmi -f bs-predictor
 	docker rmi -f bs-mongodb
 	docker network rm bs-predictor-network
