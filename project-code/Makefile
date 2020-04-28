@@ -36,7 +36,9 @@ docker-start:
 	@echo "service started"
 
 docker-remove:
-	@echo "removing the image"
+	@echo "removing files"
+	docker network disconnect bs-predictor-network bs-predictor
+	docker network disconnect bs-predictor-network bs-mongodb
 	docker rmi -f bs-predictor
 	docker rmi -f bs-mongodb
 	docker network rm bs-predictor-network

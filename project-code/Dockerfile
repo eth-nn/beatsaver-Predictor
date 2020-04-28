@@ -26,10 +26,10 @@ RUN pip install psutil
 
 RUN git clone https://github.com/eth-nn/beatsaver-Predictor
 
+WORKDIR /beatsaver_predictor
 RUN git pull 
 
 WORKDIR /beatsaver-Predictor/project-code/scriptsPackage
-
 RUN pip install .
 
 WORKDIR /beatsaver_predictor/project-code
