@@ -32,7 +32,7 @@ WORKDIR /beatsaver-Predictor/project-code/scriptsPackage
 
 RUN pip install .
 
-WORKDIR /beatsaver_predictor
+WORKDIR /beatsaver_predictor/project-code
 
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
