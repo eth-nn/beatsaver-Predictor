@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:18.04
 MAINTAINER Eth N <30096019+eth-nn@users.noreply.github.com>
 
 ENV DEBIAN_FRONTEND=noninteractive
