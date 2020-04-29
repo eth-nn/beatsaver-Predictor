@@ -26,10 +26,10 @@ RUN pip install psutil
 
 RUN git clone https://github.com/eth-nn/beatsaver-Predictor
 
-#WORKDIR /beatsaver_predictor
-#RUN git pull 
+WORKDIR "/beatsaver-Predictor"
+RUN git pull 
 
-WORKDIR /beatsaver-Predictor/project-code/scriptsPackage
+WORKDIR "/beatsaver-Predictor/project-code/scriptsPackage"
 RUN pip install .
 
 WORKDIR "/beatsaver-Predictor/project-code"
@@ -40,10 +40,3 @@ RUN pip install -r requirements.txt
 EXPOSE 8080
 
 CMD ["make", "start"]
-
-
-
-
-
-
-

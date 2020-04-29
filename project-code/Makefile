@@ -1,4 +1,4 @@
-docker-all: docker-build docker-start
+docker-all: docker-build docker-run docker-start
 	@echo "docker-all done"
 
 docker-build:
@@ -6,13 +6,17 @@ docker-build:
 	-docker network create bs-predictor-network
 	@echo "network setup done"
 	@echo "building the image from docker file..."
-	docker build --no-cache --pull -t bs-predictor .
+	docker build --pull -t bs-predictor .
 	@echo "image built"
+
+docker-net:
+	docker network create bs-predictor-network
+	@echo "network created"
 
 docker-run:
 	@echo "starting the service in container..."
-	docker run -d -p 27017-27019:27017-27019 --name bs-mongodb -itd --network=bs-predictor-network mongo	
-	docker run -v /home/:/home/ -p 8080:8080 -itd --network=bs-predictor-network bs-predictor
+	-docker run -d -p 27017-27019:27017-27019 --net-alias mongodb --name bs-mongodb -itd --network=bs-predictor-network mongo	
+	docker run -v /home/:/home/ -p 8080:8080 --name bs-predic-server -itd --network=bs-predictor-network bs-predictor
 
 service:
 	@echo "creating the service..."
@@ -25,29 +29,30 @@ start:
 
 docker-stop:
 	@echo "stopping the service"
-	docker stop bs-predictor
+	docker container stop bs-predic-server
 	docker stop bs-mongodb
 	@echo "service stopped"
 
 docker-start:
 	@echo "starting the service"
-	docker start bs-predictor
 	docker start bs-mongodb
+	docker container start bs-predic-server
 	@echo "service started"
 
 docker-remove:
 	@echo "removing files"
-	-docker network disconnect bs-predictor-network bs-predictor
+	-docker network disconnect bs-predictor-network bs-predic-server
 	-docker network disconnect bs-predictor-network bs-mongodb
+	docker rm -f bs-predic-server
 	docker rmi -f bs-predictor
-	docker rmi -f bs-mongodb
+	docker rm -f bs-mongodb
 	docker network rm bs-predictor-network
 	@echo "image removed"
 
+docker-reset-run:
+	docker rm -f bs-predic-server
+	docker rm -f bs-mongodb
+	@echo "containers removed"
+
 docker-clean: docker-stop docker-remove
 	@echo "docker service stopped and image removed"
-
-clean:
-	kill $(lsof -t -i :4555)
-	@echo "removing service files created"
-	rm -rf $(CREATED)
