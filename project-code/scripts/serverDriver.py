@@ -11,27 +11,27 @@ def availMaps():
   songList = []
 
   dbRet = mi.getAllMaps()
-    if isinstance(dbRet, pd.DataFrame):
-      # Jsonifys the dataframe to a managable format similar to a beatsaver api response
-      for i in range(dbRet.shape[0]):
-        songData = {'song_id': dbRet.at[i,'song_id'],
-                    'difficulty': int(dbRet.at[i,'difficulty']),
-                    'up_votes/total_votes': dbRet.at[i,'up_votes/total_votes'],
-                    'up_votes': int(dbRet.at[i,'up_votes']),
-                    'down_votes': int(dbRet.at[i,'down_votes']),
-                    'notes': int(dbRet.at[i,'notes']),
-                    'bombs': int(dbRet.at[i,'bombs']),
-                    'BPM': dbRet.at[i,'BPM'],
-                    'obstacles': int(dbRet.at[i,'obstacles']),
-                    'NJS': int(dbRet.at[i,'NJS']),
-                    'NJSOffset': dbRet.at[i,'NJSOffset'],
-                    'length': int(dbRet.at[i,'length']),
-                    'duration': dbRet.at[i,'duration']}
-        songList.append(songData)
+  if isinstance(dbRet, pd.DataFrame):
+    # Jsonifys the dataframe to a managable format similar to a beatsaver api response
+    for i in range(dbRet.shape[0]):
+      songData = {'song_id': dbRet.at[i,'song_id'],
+                  'difficulty': int(dbRet.at[i,'difficulty']),
+                  'up_votes/total_votes': dbRet.at[i,'up_votes/total_votes'],
+                  'up_votes': int(dbRet.at[i,'up_votes']),
+                  'down_votes': int(dbRet.at[i,'down_votes']),
+                  'notes': int(dbRet.at[i,'notes']),
+                  'bombs': int(dbRet.at[i,'bombs']),
+                  'BPM': dbRet.at[i,'BPM'],
+                  'obstacles': int(dbRet.at[i,'obstacles']),
+                  'NJS': int(dbRet.at[i,'NJS']),
+                  'NJSOffset': dbRet.at[i,'NJSOffset'],
+                  'length': int(dbRet.at[i,'length']),
+                  'duration': dbRet.at[i,'duration']}
+      songList.append(songData)
 
-      jsonRet['availSongs'] = songList
-    else:
-        jsonRet['availErr'] = dbRet
+    jsonRet['availSongs'] = songList
+  else:
+      jsonRet['availErr'] = dbRet
   return jsonRet
 
 def availModels():
