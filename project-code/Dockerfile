@@ -32,16 +32,14 @@ RUN git clone https://github.com/eth-nn/beatsaver-Predictor
 WORKDIR /beatsaver-Predictor/project-code/scriptsPackage
 RUN pip install .
 
-WORKDIR /beatsaver_predictor/project-code
+WORKDIR "/beatsaver-Predictor/project-code"
 
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
-RUN pip install connexion[swagger-ui]
 
 EXPOSE 8080
 
 CMD ["make", "start"]
-
 
 
 
