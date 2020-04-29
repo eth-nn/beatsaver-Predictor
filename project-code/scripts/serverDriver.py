@@ -2,6 +2,7 @@ import scrape
 import mongoInterface as mi
 import model as mDriver
 import data as googData
+from pandas import DataFrame
 
 from flask import send_file,jsonify
 import json
@@ -11,7 +12,7 @@ def availMaps():
   songList = []
 
   dbRet = mi.getAllMaps()
-  if isinstance(dbRet, pd.DataFrame):
+  if isinstance(dbRet, DataFrame):
     # Jsonifys the dataframe to a managable format similar to a beatsaver api response
     for i in range(dbRet.shape[0]):
       songData = {'song_id': dbRet.at[i,'song_id'],

@@ -17,12 +17,10 @@ from datetime import datetime
 
 column = ['song_id','up_votes/total_votes','up_votes','down_votes','difficulty', 'notes', 'bombs','BPM','obstacles','NJS','NJSOffset','length','duration']
 
-client = MongoClient('MONGODB', 27017)
+client = MongoClient('localhost', 27017)
 db = client.songDatabase
 coll = db.songData
 dbMdls = db.savedModels
-
-collist = db.list_collection_names()
 
 def saveMapData(pandasDataFrame):
   dataDict = pdClean.cleanDictionary(pandasDataFrame)
@@ -70,7 +68,7 @@ def saveMapData(pandasDataFrame):
   return funcLog
 
 def getAllMaps(): # Returns a pandas dataframe of all of the documents in the collection
-  if "songData" in collist:
+  if "songData" in db.list_collection_names():
     exportDf = pd.DataFrame(columns = column)
     for x in coll.find():
       exportDf = exportDf.append(x, ignore_index = True)
@@ -91,7 +89,7 @@ def saveModel(model,model_name):
   return details
 
 def getAllModels(): # Returns a list of all of the documents in the collection
-  if "savedModels" in collist:
+  if "savedModels" in db.list_collection_names():
     models = []
     for x in dbMdls.find():
       diction = x
@@ -102,7 +100,7 @@ def getAllModels(): # Returns a list of all of the documents in the collection
     return "Error: No models in database"
 
 def getModel(model_name):
-  if "savedModels" in collist:
+  if "savedModels" in db.list_collection_names():
     json_data = {}
     data = dbMdls.find({'name': model_name})
 
@@ -114,7 +112,7 @@ def getModel(model_name):
     return "Error: No models in database"
 
 def queryKey(songKey: str):
-  if "songData" in collist:
+  if "songData" in db.list_collection_names():
     exportDf = pd.DataFrame(columns = column)
     for x in coll.find({'song_id': songKey}):
       exportDf = exportDf.append(x, ignore_index = True)
