@@ -1,4 +1,5 @@
 connexion[swagger-ui]==2.2.0
+connexion
 Flask==1.0.2
 joblib==0.13.2
 jsonschema==2.6.0
