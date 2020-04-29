@@ -17,7 +17,7 @@ from datetime import datetime
 
 column = ['song_id','up_votes/total_votes','up_votes','down_votes','difficulty', 'notes', 'bombs','BPM','obstacles','NJS','NJSOffset','length','duration']
 
-client = MongoClient('localhost', 27017)
+client = MongoClient('MONGODB', 27017)
 db = client.songDatabase
 coll = db.songData
 dbMdls = db.savedModels
